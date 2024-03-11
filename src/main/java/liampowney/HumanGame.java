@@ -17,6 +17,7 @@ public class HumanGame {
         this.window.pack();
         this.window.setLocationRelativeTo(null);
         this.window.setVisible(true);
+        this.displayGame();
     }
     public void displayGame() {gamePanel.startGameThead();}
 }

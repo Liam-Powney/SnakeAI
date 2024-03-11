@@ -48,44 +48,57 @@ public class Model {
     public boolean getAlive() {return alive;}
     public int getScore() {return score;}
 
-    public void executeInstruction(Direction d) {
+    public void receiveInstruction(Direction d) {
         if (d==null) {d=currentDirection;}
+        currentDirection=d;
 
-        if (detectCollision(d)) {
+        if (detectCollision()) {
             alive=false;
             return;
         }
 
-        switch (d) {
+        switch (currentDirection) {
             case Direction.UP:
                 snake.addFirst(snake.getFirst()-width);
-                snake.removeLast();
-                currentDirection=Direction.UP;
                 break;
             case Direction.DOWN:
                 snake.addFirst(snake.getFirst()+width);
-                snake.removeLast();
-                currentDirection=Direction.DOWN;
                 break;
             case Direction.LEFT:
                 snake.addFirst(snake.getFirst()-1);
-                snake.removeLast();
-                currentDirection=Direction.LEFT;
                 break;
             case Direction.RIGHT:
                 snake.addFirst(snake.getFirst()+1);
-                snake.removeLast();
-                currentDirection=Direction.RIGHT;
-                break;
-            default:
                 break;
         }
+        pixels[snake.getFirst()]=true;
+        pixels[snake.getLast()]=false;
+        snake.removeLast();
     }
 
-    private boolean detectCollision(Direction d) {
+    private boolean detectCollision() {
 
+        int nextPixel=0;
 
-        
+        switch (currentDirection) {
+            case Direction.UP:
+                nextPixel=snake.getFirst()-width;
+                if (nextPixel<0) {return true;}
+                break;
+            case Direction.DOWN:
+                nextPixel=snake.getFirst()+width;
+                if (nextPixel>(height*width)) {return true;}
+                break;
+            case Direction.LEFT:
+                nextPixel=snake.getFirst()-1;
+                if (nextPixel%width==width-1) {return true;}
+                break;
+            case Direction.RIGHT:
+                nextPixel=snake.getFirst()+1;
+                if (nextPixel%width==0) {return true;}
+                break;
+        }
+        if (pixels[nextPixel]) {return true;}
 
         return false;
     }

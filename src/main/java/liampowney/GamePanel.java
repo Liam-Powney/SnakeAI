@@ -57,7 +57,8 @@ public class GamePanel extends JPanel implements Runnable{
                 delta--;
 
                 if (!model.getAlive()) {
-                    gameThread=null;
+                    model = new Model();
+                    keyH.lastInstruction=null;
                 }
             }
         }
@@ -68,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable{
         // if you die, stop the game 
         //if (!model.getAlive()) {gameThread=null;}
 
-        model.executeInstruction(keyH.lastInstruction);
+        model.receiveInstruction(keyH.lastInstruction);
     }
 
     public void paintComponent(Graphics g) {
@@ -77,16 +78,14 @@ public class GamePanel extends JPanel implements Runnable{
 
         // DRAW SNAKE
         Iterator<Integer> iterator = model.getSnake().iterator();
-        Integer i = iterator.next();
+        Integer it = iterator.next();
         g2.setColor(Color.PINK);
-        g2.fillRect((i%model.getWidth())*tileSize, (i/model.getWidth())*tileSize, tileSize, tileSize);
+        g2.fillRect((it%model.getWidth())*tileSize, (it/model.getWidth())*tileSize, tileSize, tileSize);
         g2.setColor(Color.GREEN);
         while (iterator.hasNext()) {
-            i = iterator.next();
-            g2.fillRect((i%model.getWidth())*tileSize, (i/model.getWidth())*tileSize, tileSize, tileSize);
+            it = iterator.next();
+            g2.fillRect((it%model.getWidth())*tileSize, (it/model.getWidth())*tileSize, tileSize, tileSize);
         }
-
-        //DRAW APPLE
         
         g2.dispose();
     }
