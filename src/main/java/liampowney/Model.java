@@ -49,7 +49,7 @@ public class Model {
         int count=0;
         for (int i=0; i<pixels.length; i++) {
             if (!pixels[i]) {
-                if (count==r) {apple = i;}
+                if (count==r) {apple = i; return;}
                 else {count++;}
             }
         }
