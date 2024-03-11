@@ -11,6 +11,7 @@ public class Model {
     private LinkedList<Integer> snake;
     private Direction currentDirection;
     private int apple;
+    private boolean appleEaten;
     private boolean alive;
 
     private int score;
@@ -63,10 +64,6 @@ public class Model {
     public boolean getAlive() {return alive;}
     public int getScore() {return score;}
 
-    public void applyTick() {
-        receiveInstruction(currentDirection);
-    }
-
     public void receiveInstruction(Direction d) {
         if ( (d==Direction.UP && currentDirection==Direction.DOWN) || 
             (d==Direction.DOWN && currentDirection==Direction.UP) ||
@@ -95,10 +92,17 @@ public class Model {
                 break;
         }
         pixels[snake.getFirst()]=true;
-        pixels[snake.getLast()]=false;
+
+        if (appleEaten) {
+            appleEaten=false;
+        }
+        else {
+            pixels[snake.getLast()]=false;
         snake.removeLast();
+        }
 
         if (snake.getFirst()==apple) {
+            appleEaten=true;
             newApple();
         }
     }

@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements Runnable{
             
 
             if(delta>1) {
-                update();
+                update(model.getCurrentDirection());
                 repaint();
                 delta--;
 
@@ -70,10 +70,6 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         
-    }
-
-    public void update() {
-        model.applyTick();
     }
 
     public void update(Direction d) {
