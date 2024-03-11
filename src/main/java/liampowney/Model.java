@@ -1,6 +1,7 @@
 package liampowney;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Model {
 
@@ -24,7 +25,7 @@ public class Model {
         this.pixels=new boolean[h*w];
         this.snake = createSnake(8);
         this.currentDirection=Direction.RIGHT;
-        this.apple=0;
+        newApple();
         this.alive=true;
         this.score=0;
     }
@@ -39,6 +40,20 @@ public class Model {
         return snake;
     }
 
+    private void newApple() {
+        int availablePixels = pixels.length-snake.size();
+        Random rand = new Random();
+        int r = rand.nextInt(availablePixels);
+
+        int count=0;
+        for (int i=0; i<pixels.length; i++) {
+            if (!pixels[i]) {
+                if (count==r) {apple = i;}
+                else {count++;}
+            }
+        }
+    }
+
     public int getHeight() {return height;}
     public int getWidth() {return width;}
     public boolean[] getPixels() {return pixels;}
@@ -48,15 +63,23 @@ public class Model {
     public boolean getAlive() {return alive;}
     public int getScore() {return score;}
 
-    public void receiveInstruction(Direction d) {
-        if (d==null) {d=currentDirection;}
-        currentDirection=d;
+    public void applyTick() {
+        receiveInstruction(currentDirection);
+    }
 
+    public void receiveInstruction(Direction d) {
+        if ( (d==Direction.UP && currentDirection==Direction.DOWN) || 
+            (d==Direction.DOWN && currentDirection==Direction.UP) ||
+            (d==Direction.LEFT && currentDirection==Direction.RIGHT) ||
+            (d==Direction.RIGHT && currentDirection==Direction.LEFT) ||
+            (d==null) ) {d=currentDirection;}
+        currentDirection=d;
+        // detect collision for new pixel
         if (detectCollision()) {
             alive=false;
             return;
         }
-
+        // if no collision, update snake pos
         switch (currentDirection) {
             case Direction.UP:
                 snake.addFirst(snake.getFirst()-width);
@@ -74,6 +97,10 @@ public class Model {
         pixels[snake.getFirst()]=true;
         pixels[snake.getLast()]=false;
         snake.removeLast();
+
+        if (snake.getFirst()==apple) {
+            newApple();
+        }
     }
 
     private boolean detectCollision() {

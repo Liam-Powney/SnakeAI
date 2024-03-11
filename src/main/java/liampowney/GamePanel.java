@@ -12,7 +12,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     private final int tileSize = 48;
 
-    private final int FPS = 6;
+    private final int FPS = 5;
     private final double drawInterval = 1000/FPS;
     private double delta;
     private long lastTime;
@@ -51,6 +51,14 @@ public class GamePanel extends JPanel implements Runnable{
             delta += (currentTime-lastTime)/drawInterval;
             lastTime=currentTime;
 
+            Direction d = keyH.manageInputs();
+            if (d!=null || d == model.getCurrentDirection()) {
+                update(d);
+                repaint();
+                delta=0;
+            }
+            
+
             if(delta>1) {
                 update();
                 repaint();
@@ -58,7 +66,6 @@ public class GamePanel extends JPanel implements Runnable{
 
                 if (!model.getAlive()) {
                     model = new Model();
-                    keyH.lastInstruction=null;
                 }
             }
         }
@@ -66,10 +73,11 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() {
-        // if you die, stop the game 
-        //if (!model.getAlive()) {gameThread=null;}
+        model.applyTick();
+    }
 
-        model.receiveInstruction(keyH.lastInstruction);
+    public void update(Direction d) {
+        model.receiveInstruction(d);
     }
 
     public void paintComponent(Graphics g) {
@@ -86,6 +94,9 @@ public class GamePanel extends JPanel implements Runnable{
             it = iterator.next();
             g2.fillRect((it%model.getWidth())*tileSize, (it/model.getWidth())*tileSize, tileSize, tileSize);
         }
+        // DRAW APPLE
+        g2.setColor(Color.RED);
+        g2.fillRect((model.getApple()%model.getWidth())*tileSize, (model.getApple()/model.getWidth())*tileSize, tileSize, tileSize);
         
         g2.dispose();
     }
