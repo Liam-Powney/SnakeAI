@@ -23,6 +23,11 @@ public class AIGamePanel extends GamePanel{
                 aiChoice=ai.makeChoice(model);
             }
             
+            Boolean b = keyH.manageAIInputs();
+            if (b!=null) {
+                if (b) {drawInterval/=2;}
+                else {drawInterval*=2;}
+            }
 
             if(delta>1) {
                 update(aiChoice);

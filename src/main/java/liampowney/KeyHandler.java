@@ -14,6 +14,11 @@ public class KeyHandler implements KeyListener{
     private boolean dPressed;
     private boolean dActionTaken;
 
+    private boolean leftPressed;
+    private boolean leftActionTaken;
+    private boolean rightPressed;
+    private boolean rightActionTaken;
+
     public KeyHandler() {
         this.wPressed=false;
         this.wActionTaken=false;
@@ -23,6 +28,10 @@ public class KeyHandler implements KeyListener{
         this.sActionTaken=false;
         this.dPressed=false;
         this.dActionTaken=false;
+        this.leftPressed=false;
+        this.leftActionTaken=false;
+        this.rightPressed=false;
+        this.rightActionTaken=false;
     }
 
     @Override
@@ -45,6 +54,12 @@ public class KeyHandler implements KeyListener{
                 break;
             case KeyEvent.VK_D:
                 dPressed=true;
+                break;
+            case KeyEvent.VK_LEFT:
+                leftPressed=true;
+                break;
+            case KeyEvent.VK_RIGHT:
+                rightPressed=true;
                 break;
         }
     }
@@ -69,10 +84,18 @@ public class KeyHandler implements KeyListener{
                 dPressed=false;
                 dActionTaken=false;
                 break;
+            case KeyEvent.VK_LEFT:
+                leftPressed=false;
+                leftActionTaken=false;
+                break;
+            case KeyEvent.VK_RIGHT:
+                rightPressed=false;
+                rightActionTaken=false;
+                break;
         }
     }
 
-    public Direction manageInputs() {
+    public Direction manageHumanInputs() {
         if (wPressed && !wActionTaken) {
             wActionTaken=true;
             return Direction.UP;
@@ -89,13 +112,19 @@ public class KeyHandler implements KeyListener{
             dActionTaken=true;
             return Direction.RIGHT;
         }
-
         return null;
-        
     }
 
-    public boolean getWPressed() {return wPressed;}
-    public boolean getWActionTaken() {return wActionTaken;}
-    public void setWActionTaken(boolean b) {wActionTaken=b;}
+    public Boolean manageAIInputs() {
+        if (leftPressed && !leftActionTaken) {
+            leftActionTaken=true;
+            return false;
+        }
+        if (rightPressed && !rightActionTaken) {
+            rightActionTaken=true;
+            return true;
+        }
+        return null;
+    }
 
 }

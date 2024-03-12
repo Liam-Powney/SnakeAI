@@ -2,7 +2,7 @@ package liampowney;
 
 import java.util.Random;
 
-public class RandomAI implements SnakeAI{
+public class RandomAI extends SnakeAI{
 
     private Random r;
 
@@ -21,8 +21,7 @@ public class RandomAI implements SnakeAI{
             case 3:
                 return Direction.RIGHT;
         }
-
-        throw new Error("You fucked it");
+        return null;
     }
 
 }

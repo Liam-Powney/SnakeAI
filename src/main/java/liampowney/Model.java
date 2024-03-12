@@ -59,6 +59,7 @@ public class Model {
     public int getWidth() {return width;}
     public boolean[] getPixels() {return pixels;}
     public LinkedList<Integer> getSnake() {return snake;}
+    public int getSnakeHead() {return snake.getFirst();}
     public Direction getCurrentDirection() {return currentDirection;}
     public int getApple() {return apple;}
     public boolean getAlive() {return alive;}
@@ -72,12 +73,12 @@ public class Model {
             (d==null) ) {d=currentDirection;}
         currentDirection=d;
         // detect collision for new pixel
-        if (detectCollision()) {
+        if (detectCollision(d)) {
             alive=false;
             return;
         }
         // if no collision, update snake pos
-        switch (currentDirection) {
+        switch (d) {
             case Direction.UP:
                 snake.addFirst(snake.getFirst()-width);
                 break;
@@ -107,28 +108,25 @@ public class Model {
         }
     }
 
-    private boolean detectCollision() {
+    public boolean detectCollision(Direction d) {
 
         int nextPixel=0;
 
-        switch (currentDirection) {
+        switch (d) {
             case Direction.UP:
                 nextPixel=snake.getFirst()-width;
-                if (nextPixel<0) {return true;}
                 break;
             case Direction.DOWN:
                 nextPixel=snake.getFirst()+width;
-                if (nextPixel>(height*width)) {return true;}
                 break;
             case Direction.LEFT:
                 nextPixel=snake.getFirst()-1;
-                if (nextPixel%width==width-1) {return true;}
                 break;
             case Direction.RIGHT:
                 nextPixel=snake.getFirst()+1;
-                if (nextPixel%width==0) {return true;}
                 break;
         }
+        if (nextPixel<0 || nextPixel>pixels.length-1 || (nextPixel%width==0 && d==Direction.RIGHT) || (nextPixel%width==width-1 && d==Direction.LEFT) ) {return true;}
         if (pixels[nextPixel]) {return true;}
 
         return false;

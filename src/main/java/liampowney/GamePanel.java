@@ -12,8 +12,8 @@ public abstract class GamePanel extends JPanel implements Runnable{
 
     protected final int tileSize = 48;
 
-    protected final int FPS = 5;
-    protected final double drawInterval = 1000/FPS;
+    protected int FPS = 4;
+    protected double drawInterval = 1000/FPS;
     protected double delta;
     protected long lastTime;
     protected long currentTime;

@@ -14,7 +14,7 @@ public class HumanGamePanel extends GamePanel{
             delta += (currentTime-lastTime)/drawInterval;
             lastTime=currentTime;
 
-            Direction d = keyH.manageInputs();
+            Direction d = keyH.manageHumanInputs();
             if (d!=null || d == model.getCurrentDirection()) {
                 update(d);
                 repaint();
