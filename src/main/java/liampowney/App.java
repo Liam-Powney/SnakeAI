@@ -5,5 +5,6 @@ public class App
     public static void main( String[] args )
     {   
         HumanGame newGame = new HumanGame();
+        newGame.startGame();
     }
 }
