@@ -8,21 +8,19 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel implements Runnable{
+public abstract class GamePanel extends JPanel implements Runnable{
 
-    private final int tileSize = 48;
+    protected final int tileSize = 48;
 
-    private final int FPS = 5;
-    private final double drawInterval = 1000/FPS;
-    private double delta;
-    private long lastTime;
-    private long currentTime;
+    protected final int FPS = 5;
+    protected final double drawInterval = 1000/FPS;
+    protected double delta;
+    protected long lastTime;
+    protected long currentTime;
 
-
-    private Model model;
-    private Thread gameThread;
-
-    private KeyHandler keyH = new KeyHandler();
+    protected Model model;
+    protected Thread gameThread;
+    protected KeyHandler keyH = new KeyHandler();
 
     public GamePanel() {
         this.model= new Model();
@@ -44,33 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     @Override
-    public void run() {
-
-        while (gameThread!=null) {
-            currentTime=System.currentTimeMillis();
-            delta += (currentTime-lastTime)/drawInterval;
-            lastTime=currentTime;
-
-            Direction d = keyH.manageInputs();
-            if (d!=null || d == model.getCurrentDirection()) {
-                update(d);
-                repaint();
-                delta=0;
-            }
-            
-
-            if(delta>1) {
-                update(model.getCurrentDirection());
-                repaint();
-                delta--;
-
-                if (!model.getAlive()) {
-                    model = new Model();
-                }
-            }
-        }
-        
-    }
+    public abstract void run();
 
     public void update(Direction d) {
         model.receiveInstruction(d);

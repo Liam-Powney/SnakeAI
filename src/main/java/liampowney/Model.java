@@ -24,7 +24,7 @@ public class Model {
         this.height=h;
         this.width=w;
         this.pixels=new boolean[h*w];
-        this.snake = createSnake(8);
+        this.snake = createSnake(5);
         this.currentDirection=Direction.RIGHT;
         newApple();
         this.alive=true;
