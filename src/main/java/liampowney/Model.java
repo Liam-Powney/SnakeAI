@@ -109,26 +109,24 @@ public class Model {
     }
 
     public boolean detectCollision(Direction d) {
-
-        int nextPixel=0;
-
-        switch (d) {
-            case Direction.UP:
-                nextPixel=snake.getFirst()-width;
-                break;
-            case Direction.DOWN:
-                nextPixel=snake.getFirst()+width;
-                break;
-            case Direction.LEFT:
-                nextPixel=snake.getFirst()-1;
-                break;
-            case Direction.RIGHT:
-                nextPixel=snake.getFirst()+1;
-                break;
-        }
+        int nextPixel=nextPixel(d);
         if (nextPixel<0 || nextPixel>pixels.length-1 || (nextPixel%width==0 && d==Direction.RIGHT) || (nextPixel%width==width-1 && d==Direction.LEFT) ) {return true;}
         if (pixels[nextPixel]) {return true;}
-
         return false;
+    }
+
+    public int nextPixel(Direction d) {
+        switch (d) {
+            case Direction.UP:
+                return snake.getFirst()-width;
+            case Direction.DOWN:
+                return snake.getFirst()+width;
+            case Direction.LEFT:
+                return snake.getFirst()-1;
+            case Direction.RIGHT:
+                return snake.getFirst()+1;
+            default:
+                throw new Error();
+        }
     }
 }

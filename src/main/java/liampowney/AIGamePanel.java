@@ -40,7 +40,7 @@ public class AIGamePanel extends GamePanel{
                 }
             }
         }
-        
-    }
 
+    }
+    
 }

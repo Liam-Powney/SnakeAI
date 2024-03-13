@@ -2,7 +2,7 @@ package liampowney;
 
 import java.util.ArrayList;
 
-public class AStarAI extends SnakeAI{
+public class HeatSeeker extends SnakeAI{
 
     @Override
     public Direction makeChoice(Model m) {
@@ -20,20 +20,7 @@ public class AStarAI extends SnakeAI{
         int indexOfLowest=0;
 
         for (int i=0; i<nextDistance.length; i++) {
-            switch (options.get(i)) {
-                case Direction.UP:
-                    nextDistance[i]=distanceFromNode(m.getSnakeHead()-m.getWidth(), m.getApple(), m);
-                    break;
-                case Direction.DOWN:
-                    nextDistance[i]=distanceFromNode(m.getSnakeHead()+m.getWidth(), m.getApple(), m);
-                    break;
-                case Direction.LEFT:
-                    nextDistance[i]=distanceFromNode(m.getSnakeHead()-1, m.getApple(), m);
-                    break;
-                case Direction.RIGHT:
-                    nextDistance[i]=distanceFromNode(m.getSnakeHead()+1, m.getApple(), m);
-                    break;
-            }
+            nextDistance[i]=distanceFromNode(m.nextPixel(options.get(i)), m.getApple(), m);
             if (nextDistance[i]<nextDistance[indexOfLowest]) {indexOfLowest=i;}
         }
 
