@@ -1,5 +1,7 @@
 package liampowney;
 
+import liampowney.snakeais.SnakeAI;
+
 public class AIGamePanel extends GamePanel{
 
     private SnakeAI ai;
@@ -7,6 +9,12 @@ public class AIGamePanel extends GamePanel{
 
     public AIGamePanel(SnakeAI s) {
         super();
+        this.ai = s;
+        this.aiChoice=null;
+    }
+
+    public AIGamePanel(SnakeAI s, int h, int w) {
+        super(h, w);
         this.ai = s;
         this.aiChoice=null;
     }

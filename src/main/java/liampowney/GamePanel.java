@@ -35,6 +35,19 @@ public abstract class GamePanel extends JPanel implements Runnable{
         this.lastTime=System.currentTimeMillis();
     }
 
+    public GamePanel(int h, int w) {
+        this.model= new Model(h, w);
+        this.setPreferredSize(new Dimension(model.getWidth()*tileSize, model.getHeight()*tileSize));
+        this.setBackground(Color.BLACK);
+        this.setDoubleBuffered(true);
+        this.model= new Model();
+        this.addKeyListener(keyH);
+        this.setFocusable(true);
+
+        this.delta=0;
+        this.lastTime=System.currentTimeMillis();
+    }
+
     public void startGameThead() {
 
         this.gameThread = new Thread(this);

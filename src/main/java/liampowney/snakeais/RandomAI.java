@@ -1,6 +1,9 @@
-package liampowney;
+package liampowney.snakeais;
 
 import java.util.Random;
+
+import liampowney.Direction;
+import liampowney.Model;
 
 public class RandomAI extends SnakeAI{
 

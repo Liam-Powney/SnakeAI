@@ -1,8 +1,11 @@
-package liampowney;
+package liampowney.snakeais;
 
 import java.util.ArrayList;
 
-public class HeatSeeker extends SnakeAI{
+import liampowney.Direction;
+import liampowney.Model;
+
+public class Greedy extends SnakeAI{
 
     @Override
     public Direction makeChoice(Model m) {

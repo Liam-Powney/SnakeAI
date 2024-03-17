@@ -6,6 +6,10 @@ public class HumanGamePanel extends GamePanel{
         super();
     }
 
+    public HumanGamePanel(int h, int w) {
+        super(h, w);
+    }
+
     @Override
     public void run() {
 

@@ -31,6 +31,18 @@ public class Model {
         this.score=0;
     }
 
+    // for use by AI
+    public Model(Model m, Direction d, boolean appleEaten) {
+        this.height=m.getHeight();
+        this.width=m.getWidth();
+        this.apple=m.getApple();
+        this.appleEaten=appleEaten;
+        this.snake=new LinkedList<Integer>(m.getSnake());
+        this.pixels=m.getPixels().clone();
+        this.alive=m.getAlive();
+        this.receiveInstruction(d);
+    }
+
     private LinkedList<Integer> createSnake(int length) {
         LinkedList<Integer> snake = new LinkedList<>();
         for (int i=0; i<length; i++) {
@@ -42,6 +54,10 @@ public class Model {
     }
 
     private void newApple() {
+
+        this.score++;
+        //System.out.println(score);
+
         int availablePixels = pixels.length-snake.size();
         Random rand = new Random();
         int r = rand.nextInt(availablePixels);

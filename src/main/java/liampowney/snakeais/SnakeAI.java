@@ -1,4 +1,7 @@
-package liampowney;
+package liampowney.snakeais;
+
+import liampowney.Direction;
+import liampowney.Model;
 
 public abstract class SnakeAI {
 
